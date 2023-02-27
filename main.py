@@ -7,23 +7,15 @@ import os
 import img2pdf
 import pathlib
 
+
+
 def start(basePath):
-    if pathlib.Path(base_path).exists():
-        print("Soubor/Cesta existuje...")
-        files = os.listdir(basePath)
-        printAllFiles(files)
-    else:
-        print("Cesta, nebo soubor neexistuje...")
+    images = [os.path.join(basePath, f) for f in os.listdir(basePath) if f.endswith('.jpg')]
+    printAllFiles(images)
 
 
-def printAllFiles(files):
-    images = list()
-    for file in files:
-        if file.endswith("jpg"):
-            images.append(base_path + file)
-            print("Nacten soubor: " + base_path + file)
-
-    with open(base_path + "output.pdf",mode="w",encoding="utf-8") as f:
+def printAllFiles(images):
+    with open(base_path + "output.pdf",mode="wb") as f:
         f.write(img2pdf.convert(images))
         print("Zapisuji soubor:" + base_path + "output.pdf")
 
